@@ -1,0 +1,19 @@
+zuul:
+  prefix: /api
+  ignored-services: '*'
+  routes:
+    estoqueservice: /estoque/**
+    pedidoservice: /pedido/**
+  sensitiveHeaders: Cookie,Set-Cookie
+
+hystrix:
+  command:
+    estoqueservice:
+      execution.isolation.thread.timeoutInMilliseconds: 2500
+    pedidoservice:
+      execution.isolation.thread.timeoutInMilliseconds: 3000
+
+estoqueservice:
+  ribbon:
+    ReadTimeout: 8000
+

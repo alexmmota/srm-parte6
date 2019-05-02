@@ -1,0 +1,530 @@
+{
+	"info": {
+		"name": "SRM",
+		"_postman_id": "48ea0dad-9bf7-4d4f-b5f4-366b260a6bb2",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "estoque",
+			"description": "",
+			"item": [
+				{
+					"name": "Criar Produto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Domain-driven Design\",\n\t\"barCode\": \"890099-349989\",\n\t\"department\": \"Livros Técnicos\",\n\t\"amount\": 20\n}"
+						},
+						"url": {
+							"raw": "http://172.32.0.108:8080/api/estoque/v1/products/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"108"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"estoque",
+								"v1",
+								"products",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por Codigo de barra",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://172.32.0.108:8080/api/estoque/v1/products/890099-349989",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"108"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"estoque",
+								"v1",
+								"products",
+								"890099-349989"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://172.32.0.108:8080/api/estoque/v1/products/890099 349989",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"108"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"estoque",
+								"v1",
+								"products",
+								"890099 349989"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar quantidade para produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "amount",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://172.32.0.108:8080/api/estoque/v1/products/890099 349989/addAmount",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"108"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"estoque",
+								"v1",
+								"products",
+								"890099 349989",
+								"addAmount"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Remover quantidade do produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "amount",
+									"value": "8",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://172.32.0.108:8080/api/estoque/v1/products/890099 349989/subtractAmount",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"108"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"estoque",
+								"v1",
+								"products",
+								"890099 349989",
+								"subtractAmount"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "config-server",
+			"description": "",
+			"item": [
+				{
+					"name": "Configuração do estoqueservice Default",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://172.32.0.103:8080/estoqueservice/default",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"103"
+							],
+							"port": "8080",
+							"path": [
+								"estoqueservice",
+								"default"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Configuração do estoqueservice de Desenvolvimento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://172.32.0.103:8080/estoqueservice/dev",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"103"
+							],
+							"port": "8080",
+							"path": [
+								"estoqueservice",
+								"dev"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Configuração do estoqueservice de produção",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://172.32.0.103:8080/estoqueservice/prd",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"103"
+							],
+							"port": "8080",
+							"path": [
+								"estoqueservice",
+								"prd"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Configuração do service gateway Default",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://172.32.0.103:8080/servicegateway/default",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"103"
+							],
+							"port": "8080",
+							"path": [
+								"servicegateway",
+								"default"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Configuração do Special Service Route",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://172.32.0.103:8080/specialrouteservice/default",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"103"
+							],
+							"port": "8080",
+							"path": [
+								"specialrouteservice",
+								"default"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "service discovery",
+			"description": "",
+			"item": [
+				{
+					"name": "Check config",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://172.32.0.104:8080/eureka/apps/specialrouteservice",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"104"
+							],
+							"port": "8080",
+							"path": [
+								"eureka",
+								"apps",
+								"specialrouteservice"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pedido",
+			"description": "",
+			"item": [
+				{
+					"name": "Criar Pedido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"itens\": [\n\t\t{\n\t\t\t\"amount\": 1,\n\t\t\t\"product\": \"890099-349989\"\n\t\t}\n\t],\n\t\"client\": {\n\t\t\"cpf\": \"00099911188\",\n\t\t\"name\": \"Alex Moreira Mota\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://172.32.0.108:8080/api/pedido/v1/order",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"108"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pedido",
+								"v1",
+								"order"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Finalizar Pedido",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://172.32.0.108:8080/api/pedido/v1/order/5cbcd516fd4f33000ab251b8/finish",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"108"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pedido",
+								"v1",
+								"order",
+								"5cbcd516fd4f33000ab251b8",
+								"finish"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Pedido por cliente",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://172.32.0.108:8080/api/pedido/v1/order/search?cpf=00099911188",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"108"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pedido",
+								"v1",
+								"order",
+								"search"
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "00099911188",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "service gateway",
+			"description": "",
+			"item": [
+				{
+					"name": "Get routes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://172.32.0.108:8080/actuator/routes",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"108"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"routes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update routes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://172.32.0.108:8080/refresh",
+							"protocol": "http",
+							"host": [
+								"172",
+								"32",
+								"0",
+								"108"
+							],
+							"port": "8080",
+							"path": [
+								"refresh"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

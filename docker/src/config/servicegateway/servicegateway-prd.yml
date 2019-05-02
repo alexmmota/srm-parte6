@@ -1,0 +1,4 @@
+zuul:
+ routes:
+   estoqueservice: /estoque/**
+   pedidoservice: /pedido/**

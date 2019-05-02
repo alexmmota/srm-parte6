@@ -1,0 +1,177 @@
+version: '3'
+
+networks:
+  srm:
+    driver: bridge
+    driver_opts:
+        com.docker.network.enable_ipv4: "true"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.32.0.0/16
+
+volumes:
+  srm_mysql:
+    driver: local
+  srm_mongodb:
+    driver: local
+
+services:
+
+  estoque-service:
+    image: srm/estoque-service:parte6
+    container_name: srm_estoque
+    networks:
+      srm:
+        ipv4_address: 172.32.0.101
+    expose:
+      - 8080
+    environment:
+      TZ: "America/Sao_Paulo"
+      SERVER_PORT: "8080"
+      CONFIGSERVER_URI: "http://config-server:8080"
+      PROFILE: "default"
+
+  pedido-service:
+    image: srm/pedido-service:parte6
+    container_name: srm_pedido
+    networks:
+      srm:
+        ipv4_address: 172.32.0.105
+    expose:
+      - 8080
+    environment:
+      TZ: "America/Sao_Paulo"
+      SERVER_PORT: "8080"
+      CONFIGSERVER_URI: "http://config-server:8080"
+      PROFILE: "default"
+
+  config-server:
+    image: srm/config-server:parte6
+    container_name: srm_configserver
+    networks:
+      srm:
+        ipv4_address: 172.32.0.103
+    expose:
+      - 8080
+    environment:
+      TZ: "America/Sao_Paulo"
+      PROFILE: "default"
+      SERVER_PORT: "8080"
+    volumes:
+      - ./src/config:/usr/local/config-repo
+
+  service-discovery:
+    image: srm/service-discovery:parte6
+    container_name: srm_servicediscovery
+    networks:
+      srm:
+        ipv4_address: 172.32.0.104
+    expose:
+      - 8080
+    environment:
+      TZ: "America/Sao_Paulo"
+      PROFILE: "default"
+      SERVER_PORT: "8080"
+
+  service-gateway:
+    image: srm/service-gateway:parte6
+    container_name: srm_servicegateway
+    networks:
+      srm:
+        ipv4_address: 172.32.0.108
+    expose:
+      - 8080
+    environment:
+      TZ: "America/Sao_Paulo"
+      SERVER_PORT: "8080"
+      CONFIGSERVER_URI: "http://config-server:8080"
+      PROFILE: "default"
+
+  special-route-service:
+    image: srm/special-route-service:parte6
+    container_name: srm_specialroute
+    networks:
+      srm:
+        ipv4_address: 172.32.0.109
+    expose:
+      - 8080
+    environment:
+      TZ: "America/Sao_Paulo"
+      SERVER_PORT: "8080"
+      CONFIGSERVER_URI: "http://config-server:8080"
+      PROFILE: "default"
+
+  new-estoque-service:
+    image: srm/new-estoque-service:parte6
+    container_name: srm_newestoque
+    networks:
+      srm:
+        ipv4_address: 172.32.0.110
+    expose:
+      - 8080
+    environment:
+      TZ: "America/Sao_Paulo"
+      SERVER_PORT: "8080"
+      CONFIGSERVER_URI: "http://config-server:8080"
+      PROFILE: "default"
+
+  database:
+    image: mysql
+    container_name: srm_mysql
+    command: --init-file /usr/home/database/init.sql
+    restart: always
+    networks:
+      srm:
+        ipv4_address: 172.32.0.102
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: db_srm
+      TZ: "America/Sao_Paulo"
+    volumes:
+      - srm_mysql:/var/lib/mysql
+      - ./src/mysql:/usr/home/database
+
+  mongodb:
+    image: mongo:3.6.3
+    container_name: srm_mongo
+    command: --bind_ip_all
+    networks:
+      srm:
+        ipv4_address: 172.32.0.106
+    expose:
+      - 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+      MONGO_INITDB_DATABASE: db_srm
+    volumes:
+      - ./src/mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - srm_mongodb:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    networks:
+      srm:
+        ipv4_address: 172.32.0.107
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 1234
+
+  security-service:
+    image: srm/security-service:parte6
+    container_name: srm_securityservice
+    networks:
+      srm:
+        ipv4_address: 172.32.0.111
+    expose:
+      - 8080
+    environment:
+      TZ: "America/Sao_Paulo"
+      SERVER_PORT: "8080"
+      CONFIGSERVER_URI: "http://config-server:8080"
+      PROFILE: "default"
