@@ -1,4 +1,4 @@
-package br.com.srm.config;
+package br.com.srm.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

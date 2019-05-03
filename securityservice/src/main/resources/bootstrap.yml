@@ -19,3 +19,6 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://service-discovery:8080/eureka/
+
+signing:
+  key: '44354_gj35vh*ags'

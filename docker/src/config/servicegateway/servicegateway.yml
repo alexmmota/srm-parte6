@@ -16,4 +16,3 @@ hystrix:
 estoqueservice:
   ribbon:
     ReadTimeout: 8000
-

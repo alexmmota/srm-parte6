@@ -7,3 +7,6 @@ security:
   oauth2:
     resource:
       userInfoUri: http://security-service:8080/user
+
+signing:
+  key: '44354_gj35vh*ags'

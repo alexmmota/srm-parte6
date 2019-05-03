@@ -62,12 +62,12 @@ public class SpecialRoutesFilter extends ZuulFilter {
 
     @Override
     public Object run() {
-        RequestContext ctx = RequestContext.getCurrentContext();
-        AbTestingRoute abTestRoute = specialRouteClient.getRoute(filterUtils.getServiceId());
-        if (abTestRoute != null && useSpecialRoute(abTestRoute)) {
-            String route = buildRouteString(ctx.getRequest().getRequestURI(), abTestRoute.getEndpoint(), ctx.get("serviceId").toString());
-            forwardToSpecialRoute(route);
-        }
+//        RequestContext ctx = RequestContext.getCurrentContext();
+//        AbTestingRoute abTestRoute = specialRouteClient.getRoute(filterUtils.getServiceId());
+//        if (abTestRoute != null && useSpecialRoute(abTestRoute)) {
+//            String route = buildRouteString(ctx.getRequest().getRequestURI(), abTestRoute.getEndpoint(), ctx.get("serviceId").toString());
+//            forwardToSpecialRoute(route);
+//        }
         return null;
     }
 
