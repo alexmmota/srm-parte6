@@ -41,3 +41,4 @@ keycloak:
     authRoles[0]: user
     securityCollections[0]:
       patterns[0]: "/v1/departments/*"
+
