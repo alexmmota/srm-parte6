@@ -12,9 +12,6 @@ public final class DelegatingUserContextCallable<V> implements Callable<V> {
     private static final Logger logger = LoggerFactory.getLogger(DelegatingUserContextCallable.class);
     private final Callable<V> delegate;
 
-
-
-    //private final UserContext delegateUserContext;
     private UserContext originalUserContext;
 
     public DelegatingUserContextCallable(Callable<V> delegate,

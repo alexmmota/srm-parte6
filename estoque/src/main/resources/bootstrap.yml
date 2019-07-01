@@ -20,3 +20,24 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://service-discovery:8080/eureka/
+
+security:
+  basic:
+    enabled: 'false'
+
+management:
+  security:
+    enabled: 'false'
+
+keycloak:
+  auth-server-url: 'http://172.32.0.113:8080/auth'
+  realm: 'srm'
+  ssl-required: 'none'
+  resource: 'srm-ecommerce'
+  autodetect-bearer-only: 'true'
+  credentials:
+    secret: '27409db6-0707-4dc4-9e11-86cc6a1869de'
+  security-constraints[0]:
+    authRoles[0]: user
+    securityCollections[0]:
+      patterns[0]: "/v1/departments/*"
