@@ -8,7 +8,7 @@ public class Product implements Serializable {
 
     private Long id;
     private String name;
-    private String barCode;
+    private String isbn;
     private String department;
     private Integer amount;
 

@@ -9,7 +9,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 @RefreshScope
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "br.com.srm.repository")
 @EnableHystrix
 @EnableResourceServer
 public class Application {

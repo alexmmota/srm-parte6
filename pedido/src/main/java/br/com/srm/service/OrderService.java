@@ -6,6 +6,8 @@ import br.com.srm.model.Order;
 import br.com.srm.model.OrderItem;
 import br.com.srm.client.dto.Product;
 import br.com.srm.repository.OrderRepository;
+import br.com.srm.utils.UserContext;
+import br.com.srm.utils.UserContextHolder;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.slf4j.Logger;
@@ -13,10 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -31,7 +30,8 @@ public class OrderService {
 
     @HystrixCommand
     public Order create(Order order) {
-        logger.info("m=create, order={}", order);
+        logger.info("m=create, order={}, correlationId={}", order, UserContextHolder.getContext().getCorrelationId());
+        validateItensExists(order);
         order.setCreateDate(new Date());
         order.setStatus(Order.Status.CREATED);
         return orderRepository.save(order);
@@ -43,10 +43,17 @@ public class OrderService {
     }
 
     @HystrixCommand(commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",
-                             value = "1000")})
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000")},
+            threadPoolProperties = {
+                    @HystrixProperty(name = "coreSize", value = "3")
+            },
+            fallbackMethod = "fallBackFindByClient")
     public List<Order> findByClient(String cpf) {
         return orderRepository.findByClient_CpfOrderByCreateDateAsc(cpf);
+    }
+
+    public List<Order> fallBackFindByClient(String cpf) {
+        return Collections.EMPTY_LIST;
     }
 
     public Order finish(String id) {
@@ -69,18 +76,18 @@ public class OrderService {
 
     private void validateItens(Order order) {
         for (OrderItem item : order.getItens()) {
-            Product product = findProductByBarCode(item);
+            Product product = findProductByIsbn(item);
             if (product.getAmount() < item.getAmount())
                 throw new BusinessServiceException("Quantidade de produto insuficiente no estoque");
         }
     }
 
-    @HystrixCommand(threadPoolKey = "productByBarCodeThreadPool",
+    @HystrixCommand(threadPoolKey = "productByIsbnThreadPool",
             threadPoolProperties = {
                 @HystrixProperty(name = "coreSize",value="30"),
                 @HystrixProperty(name="maxQueueSize", value="10")})
-    private Product findProductByBarCode(OrderItem item) {
-        return estoqueClient.findByBarCode(item.getProduct());
+    private Product findProductByIsbn(OrderItem item) {
+        return estoqueClient.findByIsbn(1l, item.getProduct());
     }
 
     private void sleep() {
@@ -99,7 +106,15 @@ public class OrderService {
 
     @HystrixCommand
     private void subtractProductAmount(OrderItem item) {
-        estoqueClient.subtractAmount(item.getProduct(), item.getAmount());
+        estoqueClient.subtractAmount(1l, item.getProduct(), item.getAmount());
+    }
+
+    private void validateItensExists(Order order) {
+        for (OrderItem item : order.getItens()) {
+            Product product = estoqueClient.findByIsbn(1l, item.getProduct());
+            if (product == null)
+                throw new BusinessServiceException("Produto nao encontrado");
+        }
     }
 
     private Order getOrderById(String id) {

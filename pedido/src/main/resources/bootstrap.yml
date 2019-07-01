@@ -8,6 +8,7 @@ spring:
       dev
   cloud:
     config:
+      label: parte6
       enabled: true
       uri: http://config-server:8080
 
