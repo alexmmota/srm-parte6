@@ -8,6 +8,7 @@ spring:
       dev
   cloud:
     config:
+      label: parte6
       enabled: true
       uri: http://config-server:8080
 
@@ -22,3 +23,4 @@ eureka:
 
 signing:
   key: '44354_gj35vh*ags'
+

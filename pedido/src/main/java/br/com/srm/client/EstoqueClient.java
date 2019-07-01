@@ -1,23 +1,25 @@
 package br.com.srm.client;
 
 import br.com.srm.client.dto.Product;
+import br.com.srm.utils.UserContext;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient("servicegateway")
 public interface EstoqueClient {
 
     @RequestMapping(value = "/api/estoque/v1/departments/{departmentId}/products/{isbn}",
             method = RequestMethod.GET)
-    Product findByIsbn(@PathVariable("departmentId") Long departmentId,
+    Product findByIsbn(@RequestHeader(UserContext.AUTH_TOKEN) String headerAuthorization,
+                       @RequestHeader(UserContext.CORRELATION_ID) String headerCorrelationId,
+                       @PathVariable("departmentId") Long departmentId,
                        @PathVariable("isbn") String isbn);
 
     @RequestMapping(value = "/api/estoque/v1/departments/{departmentId}/products/{isbn}/subtractAmount",
             method = RequestMethod.POST)
-    void subtractAmount(@PathVariable("departmentId") Long departmentId,
+    void subtractAmount(@RequestHeader(UserContext.AUTH_TOKEN) String headerAuthorization,
+                        @RequestHeader(UserContext.CORRELATION_ID) String headerCorrelationId,
+                        @PathVariable("departmentId") Long departmentId,
                         @PathVariable("isbn") String isbn,
                         @RequestParam("amount") Integer amount);
 

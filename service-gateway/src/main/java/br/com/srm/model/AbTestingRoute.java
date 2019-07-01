@@ -38,4 +38,14 @@ public class AbTestingRoute {
     public void setWeight(Integer weight) {
         this.weight = weight;
     }
+
+    @Override
+    public String toString() {
+        return "AbTestingRoute{" +
+                "serviceName='" + serviceName + '\'' +
+                ", active='" + active + '\'' +
+                ", endpoint='" + endpoint + '\'' +
+                ", weight=" + weight +
+                '}';
+    }
 }

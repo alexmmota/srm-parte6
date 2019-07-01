@@ -37,7 +37,7 @@ services:
     container_name: srm_pedido
     networks:
       srm:
-        ipv4_address: 172.32.0.105
+        ipv4_address: 172.32.0.106
     expose:
       - 8080
     environment:
@@ -61,12 +61,19 @@ services:
     volumes:
       - ./src/config:/usr/local/config-repo
 
+  rabbitmq-srm:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_srm
+    networks:
+      srm:
+        ipv4_address: 172.32.0.104
+      
   service-discovery:
     image: srm/service-discovery:parte6
     container_name: srm_servicediscovery
     networks:
       srm:
-        ipv4_address: 172.32.0.104
+        ipv4_address: 172.32.0.105
     expose:
       - 8080
     environment:
@@ -79,7 +86,7 @@ services:
     container_name: srm_servicegateway
     networks:
       srm:
-        ipv4_address: 172.32.0.108
+        ipv4_address: 172.32.0.109
     expose:
       - 8080
     environment:
@@ -93,7 +100,7 @@ services:
     container_name: srm_specialroute
     networks:
       srm:
-        ipv4_address: 172.32.0.109
+        ipv4_address: 172.32.0.110
     expose:
       - 8080
     environment:
@@ -107,7 +114,7 @@ services:
     container_name: srm_newestoque
     networks:
       srm:
-        ipv4_address: 172.32.0.110
+        ipv4_address: 172.32.0.111
     expose:
       - 8080
     environment:
@@ -138,7 +145,7 @@ services:
     command: --bind_ip_all
     networks:
       srm:
-        ipv4_address: 172.32.0.106
+        ipv4_address: 172.32.0.107
     expose:
       - 27017
     environment:
@@ -154,7 +161,7 @@ services:
     restart: always
     networks:
       srm:
-        ipv4_address: 172.32.0.107
+        ipv4_address: 172.32.0.108
     ports:
       - 8081:8081
     environment:
@@ -167,7 +174,7 @@ services:
     container_name: srm_securityservice
     networks:
       srm:
-        ipv4_address: 172.32.0.111
+        ipv4_address: 172.32.0.112
     expose:
       - 8080
     environment:

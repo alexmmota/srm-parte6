@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @RefreshScope
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "br.com.srm.repository")
 @EnableHystrix
 public class Application {
 

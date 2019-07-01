@@ -87,7 +87,8 @@ public class OrderService {
                 @HystrixProperty(name = "coreSize",value="30"),
                 @HystrixProperty(name="maxQueueSize", value="10")})
     private Product findProductByIsbn(OrderItem item) {
-        return estoqueClient.findByIsbn(1l, item.getProduct());
+        return estoqueClient.findByIsbn(UserContextHolder.getContext().getAuthToken(),
+                UserContextHolder.getContext().getCorrelationId(),1l, item.getProduct());
     }
 
     private void sleep() {
@@ -106,12 +107,16 @@ public class OrderService {
 
     @HystrixCommand
     private void subtractProductAmount(OrderItem item) {
-        estoqueClient.subtractAmount(1l, item.getProduct(), item.getAmount());
+        estoqueClient.subtractAmount(UserContextHolder.getContext().getAuthToken(),
+                UserContextHolder.getContext().getCorrelationId(),
+                1l, item.getProduct(), item.getAmount());
     }
 
     private void validateItensExists(Order order) {
         for (OrderItem item : order.getItens()) {
-            Product product = estoqueClient.findByIsbn(1l, item.getProduct());
+            Product product = estoqueClient.findByIsbn(UserContextHolder.getContext().getAuthToken(),
+                    UserContextHolder.getContext().getCorrelationId(),
+                    1l, item.getProduct());
             if (product == null)
                 throw new BusinessServiceException("Produto nao encontrado");
         }

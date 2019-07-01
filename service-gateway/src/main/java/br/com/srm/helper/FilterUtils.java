@@ -15,8 +15,7 @@ public class FilterUtils {
         RequestContext ctx = RequestContext.getCurrentContext();
         if (ctx.getRequest().getHeader(CORRELATION_ID) !=null) {
             return ctx.getRequest().getHeader(CORRELATION_ID);
-        }
-        else{
+        } else{
             return ctx.getZuulRequestHeaders().get(CORRELATION_ID);
         }
     }
